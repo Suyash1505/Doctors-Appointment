@@ -25,7 +25,7 @@ const Banner = () => {
                 <button
                     onClick={() => {navigate('/login'); scrollTo(0,0)}}
                     className='bg-white gap-2 px-8 py-3 mt-6 rounded-full sm:text-base
-                    text-gray-600 text-sm hover:scale-105 transition-all duration-300'>
+                    text-text text-sm hover:scale-105 transition-all duration-300'>
                     Create Account
                 </button>
             </div>
