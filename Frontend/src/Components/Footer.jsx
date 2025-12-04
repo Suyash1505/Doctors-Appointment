@@ -7,7 +7,7 @@ const Footer = () => {
         
             <div className='flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-40 text-sm'>
 
-                {/* --------- Section 1 ----------- */}
+                {/* --------- LEFT PART ----------- */}
                 <div>
                     <img 
                         className='mb-5 w-40'
@@ -15,15 +15,18 @@ const Footer = () => {
                         alt="logo" 
                     />
 
-                    <p className='w-full md:w-2/3 text-gray-600 leading-6'>
+                    <p className='w-full md:w-2/3 text-text leading-6'>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius assumenda facilis beatae voluptatem corrupti, quas saepe nobis suscipit molestiae temporibus? Qui ratione, possimus voluptas autem sint eveniet quam veritatis dolore.
                     </p>
                 </div>
 
-                {/* --------- Section 2 ----------- */}
+                {/* --------- CENTRE PART ----------- */}
                 <div>
-                    <p className='text-xl font-medium mb-5'>COMPANY</p>
-                    <ul className='flex flex-col gap-2 text-gray-600'>
+                    <p className='text-xl font-medium mb-5'>
+                        COMPANY
+                    </p>
+
+                    <ul className='flex flex-col gap-2 text-text-muted'>
                         <li>Home</li>
                         <li>About Us</li>
                         <li>Contact Us</li>
@@ -31,10 +34,13 @@ const Footer = () => {
                     </ul>
                 </div>
 
-                {/* --------- Section 3 ----------- */}
+                {/* --------- RIGHT PART ----------- */}
                 <div>
-                    <p className='text-xl font-medium mb-5'>GET IN TOUCH</p>
-                    <ul className='flex flex-col gap-2 text-gray-600'>
+                    <p className='text-xl font-medium mb-5'>
+                        GET IN TOUCH
+                    </p>
+
+                    <ul className='flex flex-col gap-2 text-text-muted'>
                         <li>+91-913-170-3245</li>
                         <li>adv.mks7171@gmail.com</li>
                     </ul>
@@ -45,7 +51,9 @@ const Footer = () => {
             {/* --------- COPY RIGHT TEXT ----------- */}
             <div>
                 <hr />
-                <p className='py-5 text-sm text-center'>Copyright 2024@ Prescripto - All right reserved</p>
+                <p className='py-5 text-sm text-center'>
+                    Copyright 2025@ CureLine - All right reserved
+                </p>
             </div>
         </div>
     )

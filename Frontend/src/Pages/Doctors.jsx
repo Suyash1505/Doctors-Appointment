@@ -53,7 +53,7 @@ const Doctors = () => {
         </div>
 
         {/* RIGHT SIDE */}
-        <div className='w-full grid grid-cols-auto gap-4 gap-y-6'>
+        <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 gap-y-6'>
           {
             filterDoc.map( (item, index) => (
               <div key={index} 

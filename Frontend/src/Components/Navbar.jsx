@@ -10,85 +10,85 @@ const Navbar = () => {
     const [token, setToken] = useState(true);
 
     return (
-        <div className='flex items-center justify-between text-sm py-4 mb-4
-            border-b border-b-gray-400'>
+        <div className='flex items-center justify-between text-sm px-6 py-4 mb-4
+            border-b border-borderSoft bg-backgroundAlt/90 backdrop-blur-xl shadow-soft sticky top-0 z-50'>
 
             {/* LOGO */}
             <img 
                 onClick={() => navigate('/')}
-                className='w-44 cursor-pointer'
+                className='w-40 cursor-pointer hover:scale-[1.02] transition-all duration-200'
                 src={assets.logo} 
                 alt="logo" 
             />
 
             {/* LINKS */}
-            <ul className='hidden md:flex items-start gap-5 font-medium'>
+            <ul className='hidden md:flex items-center gap-7 font-medium text-textSecondary'>
 
                 {/* HOME */}
-                <NavLink to='/'>
-                    <li className='py-1'>Home</li>
-                    <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
+                <NavLink to='/' className='group'>
+                    <li className='py-1 hover:text-primary transition'>Home</li>
+                    <hr className='border-none outline-none h-[2px] bg-primary w-3/5 mx-auto scale-x-0 group-hover:scale-x-100 transition-transform' />
                 </NavLink>
  
                 {/* ALL DOCTORS */}
-                <NavLink to='/doctors'>
-                    <li className='py-1'>All Doctors</li>
-                    <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
+                <NavLink to='/doctors' className='group'>
+                    <li className='py-1 hover:text-primary transition'>All Doctors</li>
+                    <hr className='border-none outline-none h-[2px] bg-primary w-3/5 mx-auto scale-x-0 group-hover:scale-x-100 transition-transform' />
                 </NavLink>
 
                 {/* ABOUT */}
-                <NavLink to='/about'>
-                    <li className='py-1'>About</li>
-                    <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
+                <NavLink to='/about' className='group'>
+                    <li className='py-1 hover:text-primary transition'>About</li>
+                    <hr className='border-none outline-none h-[2px] bg-primary w-3/5 mx-auto scale-x-0 group-hover:scale-x-100 transition-transform' />
                 </NavLink>
 
                 {/* CONTACT */}
-                <NavLink to='/contact'>
-                    <li className='py-1'>Contact</li>
-                    <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
+                <NavLink to='/contact' className='group'>
+                    <li className='py-1 hover:text-primary transition'>Contact</li>
+                    <hr className='border-none outline-none h-[2px] bg-primary w-3/5 mx-auto scale-x-0 group-hover:scale-x-100 transition-transform' />
                 </NavLink>
             </ul>
 
-            {/* LOGIN */} {/* CONDITION WHEN TOKEN IS TRUE -> USER IS LOGIN
-            SHOW PROFILE AND DROP DOWN ELSE SHOW CREATE ACCOUNT */}
-
+            {/* LOGIN */}
             <div className='flex items-center gap-4'>
                 {   
                     token
                     ?<div className='flex items-center gap-2 cursor-pointer group relative'>
 
                         <img 
-                            className='w-8 rounded-full'
+                            className='w-9 rounded-full border border-borderSoft shadow-soft hover:scale-105 transition'
                             src={assets.profile_pic} 
                             alt="Profile" 
                         />
 
                         <img 
-                            className='w-2.5'
+                            className='w-3 opacity-70 group-hover:opacity-100 transition'
                             src={assets.dropdown_icon} 
                             alt="dropDown-icon" 
                         />
 
-                        {/* LINKS FOR DROP DOWN MENUE */}
-                        <div className='absolute top-0 right-0 pt-14 text-base font-medium
-                        text-gray-600 z-20 hidden group-hover:block'>
-                            
-                            <div className='min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4'>
+                        {/* DROPDOWN MENU */}
+                        <div className='absolute top-0 right-0 pt-14 text-sm font-medium
+                        text-textSecondary z-20 hidden group-hover:block transition'>
+
+                            <div className='min-w-52 rounded-xl flex flex-col gap-3 p-4 border border-borderSoft 
+                            bg-surface/80 backdrop-blur-xl shadow-xl'>
+
                                 <p 
                                     onClick={() => navigate('/MyProfile')}
-                                    className='hover:text-black cursor-pointer'>
+                                    className='hover:text-primary hover:bg-surfaceLight px-2 py-1 rounded transition cursor-pointer'>
                                     My Profile
                                 </p>
 
                                 <p 
                                     onClick={() => navigate('/my-appointment')}
-                                    className='hover:text-black cursor-pointer'>
+                                    className='hover:text-primary hover:bg-surfaceLight px-2 py-1 rounded transition cursor-pointer'>
                                     My Appointment
                                 </p>
 
                                 <p 
                                     onClick={() => setToken(false)}
-                                    className='hover:text-black cursor-pointer'>
+                                    className='hover:text-danger hover:bg-surfaceLight px-2 py-1 rounded transition cursor-pointer'>
                                     Logout
                                 </p>
 
@@ -97,8 +97,8 @@ const Navbar = () => {
                     </div>
 
                     : <button 
-                        className='bg-primary text-white px-8 py-3 rounded-full font-light 
-                        hidden md:block'
+                        className='bg-primary hover:bg-primaryHover text-white px-7 py-2.5 rounded-full font-medium 
+                        hidden md:block shadow-soft hover:shadow-glow transition'
                         onClick={() => navigate('/login')}
                     >
                         Create account
@@ -106,14 +106,17 @@ const Navbar = () => {
                 }
                 <img 
                     onClick={() => setShowMenu(true)}
-                    className='w-6 md:hidden'
+                    className='w-7 md:hidden opacity-80 hover:opacity-100 transition'
                     src={assets.menu_icon} 
                     alt="menu_icon"
                 />
 
                 {/* -------- MOBILE MENU ----------- */}
-                <div className={` ${showMenu ? 'fixed w-full' : 'h-0 w-0'} md:hidden right-0 bottom-0 top-0 z-20 overflow-hidden transition-all bg-white`}>
-                    <div className='flex items-center justify-between px-5 py-6'>
+                <div className={` ${showMenu ? 'fixed w-full' : 'h-0 w-0'} md:hidden 
+                        right-0 bottom-0 top-0 z-50 overflow-hidden transition-all 
+                        bg-backgroundAlt backdrop-blur-xl`}>
+
+                    <div className='flex items-center justify-between px-5 py-6 border-b border-borderSoft'>
                         <img 
                             className='w-36'
                             src={assets.logo} 
@@ -121,18 +124,18 @@ const Navbar = () => {
                         />
 
                         <img 
-                            className='w-7'
+                            className='w-7 hover:rotate-90 transition'
                             onClick={() => setShowMenu(false)}
                             src={assets.cross_icon} 
                             alt="cross_icon" 
                         />
                     </div>
 
-                    <ul className='flex flex-col items-center gap-2 mt-5 px-5 text-lg font-medium'>
-                        <NavLink  onClick={() => setShowMenu(false)} to='/'><p className='px-4 py-2 rounded inline-block'>Home</p></NavLink>
-                        <NavLink  onClick={() => setShowMenu(false)} to='/doctors'><p className='px-4 py-2 rounded inline-block'>All Doctors</p></NavLink>
-                        <NavLink  onClick={() => setShowMenu(false)} to='/about'><p className='px-4 py-2 rounded inline-block'>ABOUT</p></NavLink>
-                        <NavLink  onClick={() => setShowMenu(false)} to='/contact'><p className='px-4 py-2 rounded inline-block'>CONTACT</p></NavLink>
+                    <ul className='flex flex-col items-center gap-4 mt-8 px-5 text-lg font-medium text-textPrimary'>
+                        <NavLink onClick={() => setShowMenu(false)} to='/'><p className='px-5 py-2 rounded-full hover:bg-surfaceLight hover:text-primary transition'>Home</p></NavLink>
+                        <NavLink onClick={() => setShowMenu(false)} to='/doctors'><p className='px-5 py-2 rounded-full hover:bg-surfaceLight hover:text-primary transition'>All Doctors</p></NavLink>
+                        <NavLink onClick={() => setShowMenu(false)} to='/about'><p className='px-5 py-2 rounded-full hover:bg-surfaceLight hover:text-primary transition'>About</p></NavLink>
+                        <NavLink onClick={() => setShowMenu(false)} to='/contact'><p className='px-5 py-2 rounded-full hover:bg-surfaceLight hover:text-primary transition'>Contact</p></NavLink>
                     </ul>
                 </div>
             </div>
