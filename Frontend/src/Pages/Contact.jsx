@@ -25,11 +25,11 @@ const Contact = () => {
           </p>
 
           <p className='text-gray-400'>
-            54709, Willms Station <br /> Suite 350,Washington, USA 
+            Block C, Plot. No 753 <br /> Jabalpur, India 
           </p>
 
           <p className='text-gray-400'>
-            Tel: (451) 555-0123 <br /> Email: adv.mks7171@gmail.com
+            Tel: (+91) 9191703245 <br /> Email: adv.mks7171@gmail.com
           </p>
 
           <p className='font-semibold text-lg text-text'>
