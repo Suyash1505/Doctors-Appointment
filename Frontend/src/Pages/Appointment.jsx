@@ -29,7 +29,7 @@ const Appointment = () => {
 
     for(let i = 0; i < 7; i++){
 
-      // GETTING DATE WITH INDEX
+      // GETTING DATE WITH INDEX -> FUTURE 7 DAYS FROM NOW 
       let currDate = new Date(today);
       currDate.setDate(today.getDate() + i);
 
@@ -41,7 +41,7 @@ const Appointment = () => {
       // SETTING HOURS
       if(today.getDate() === currDate.getDate()){
         currDate.setHours(currDate.getHours() > 10 ? currDate.getHours() + 1: 10);
-        currDate.setMinutes(currDate.getMinutes() > 30? 30: 0);
+        currDate.setMinutes(currDate.getMinutes() > 30 ? 30 : 0);
       }
       else{
         currDate.setHours(10);
@@ -79,6 +79,7 @@ const Appointment = () => {
     console.log(docSlot); 
   }, [docSlot])
 
+
   return docInfo && (
     <div>
       {/* ----------- DOCTORS DETAILS --------------- */}
@@ -103,8 +104,11 @@ const Appointment = () => {
               src={assets.verified_icon} alt="verify-icon" />
           </p>
 
-          <div className='flex items-center gap-2 text-sm mt-1 text-gray-600'>
-            <p>{docInfo.degree} - {docInfo.speciality}</p>
+          <div className='flex items-center gap-2 text-sm mt-1 text-gray-900'>
+            <p className='text-gray-600'>
+              {docInfo.degree} - {docInfo.speciality}
+            </p>
+
             <button className='py-0.5 px-2 border text-xs rounded-full'>
               {docInfo.experience}
             </button>
@@ -112,7 +116,7 @@ const Appointment = () => {
 
           {/* ----------- ABOUT DOCTOR --------------- */}
           <div>
-            <p className='flext items-center gap-1 text-sm font-medium text-gray-900 mt-3'>
+            <p className='flex items-center gap-1 text-sm font-medium text-gray-900 mt-3'>
               About
               <img src={assets.info_icon} alt="info-icon" />
             </p>
@@ -122,7 +126,7 @@ const Appointment = () => {
             </p>
           </div>
 
-          <p className='text-gray-500 font-medium mt-4'>
+          <p className='text-gray-900 font-medium mt-4'>
             Appointment fee: <span className='text-gray-600'>{currencySymbole}{docInfo.fees}</span>
           </p>
         </div>
@@ -139,7 +143,7 @@ const Appointment = () => {
               <div 
                 onClick={ () => setSlotIndex(index)}
                 className={`text-center py-6 min-w-16 rounded-full cursor-pointer 
-                  ${slotIndex === index? 'bg-primary text-white': 'border border-gray-200'}`}
+                  ${slotIndex === index? 'bg-primary text-white': 'border border-gray-600'}`}
                 key={index}
               >
                 <p>{item[0] && daysOfWeek[item[0].datetime.getDay()]}</p>
@@ -156,8 +160,9 @@ const Appointment = () => {
               <p
                 onClick={ () => setSlotTime(item.time)}
                 className={`text-sm font-light flex-shrink-0 px-5 py-2 cursor-pointer rounded-full 
-                  ${item.time === slotTime ? 'bg-primary text-white': 'border border-gray-300 text-gray-400'}`}
-                key={index}>
+                  ${item.time === slotTime ? 'bg-primary text-white': 'border border-gray-600 text-gray-400'}`}
+                key={index}
+              >
                 {item.time.toLowerCase()}
               </p>
             ))
@@ -170,7 +175,10 @@ const Appointment = () => {
       </div>
 
       {/* ----------- LISTING RELATED DOCTORS --------------- */}
-      <RelatedDoctors docId={docId} speciality={docInfo.speciality} />
+      <RelatedDoctors 
+        docId={docId} 
+        speciality={docInfo.speciality} 
+      />
     </div>
   )
 }
