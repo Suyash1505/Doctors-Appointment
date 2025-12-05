@@ -7,13 +7,13 @@ const About = () => {
     <div>
       
       <div className='text-center text-2xl text-gray-500 pt-10'>
-        <p>ABOUT <span className='text-gray-700 font-medium'>US</span> </p>
+        <p>ABOUT <span className='text-gray-600 font-medium'>US</span> </p>
       </div>
 
       <div className='flex flex-col my-10 md:flex-row gap-12'>
         { /* ------------ LEFT PART -------------- */}
         <img 
-          className='w-full md:max-w-[360px]'
+          className='w-full md:max-w-[360px] rounded-lg'
           src={assets.about_image} 
           alt="about_image"
         />
@@ -21,19 +21,19 @@ const About = () => {
         { /* ------------ RIGHT PART -------------- */}
         <div className='flex flex-col justify-center gap-6 md:w-2/4 text-sm text-gray-600'>
           <p>
-            Welcome To Prescripto, Your Trusted Partner In Managing Your Healthcare Needs Conveniently And Efficiently.
+            Welcome To CureLine, Your Trusted Partner In Managing Your Healthcare Needs Conveniently And Efficiently.
             At Prescripto, We Understand The Challenges Individuals Face When It Comes To Scheduling Doctor 
             Appointments And Managing Their Health Records. 
           </p>
 
           <p>
-            Prescripto Is Committed To Excellence In Healthcare Technology. We Continuously Strive To Enhance Our Platform, 
+            CureLine Is Committed To Excellence In Healthcare Technology. We Continuously Strive To Enhance Our Platform, 
             Integrating The Latest Advancements To Improve User Experience And Deliver Superior Service.
             Whether You're Booking Your First Appointment Or Managing Ongoing Care, 
             Prescriete Is Here To Support You Every Step Of The Way.
           </p>
 
-          <b className='text-gray-800'>Our Vision</b>
+          <b className='text-gray-100'>Our Vision</b>
 
           <p>
             Our Vision At Prescripto Is To Create A Seamless Healthcare Experience For Every User. 
@@ -46,12 +46,14 @@ const About = () => {
 
       { /* ------------ WHY CHOOSE US -------------- */}
       <div className='text-xl my-4'>
-        <p className='text-gray-500'>WHY <span className='text-gray-700 font-semibold'>CHOOSE US</span> </p>
+        <p className='text-text'>WHY 
+          <span className='text-gray-600 font-semibold'>CHOOSE US</span> 
+        </p>
       </div>
 
       <div className='flex flex-col md:flex-row mb-20'>
         { /* ------------ EFFICIENCY -------------- */}
-        <div className='border px-10 md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-primary hover:text-white transition-all duration-300 text-gray-600 cursor-pointer'>
+        <div className='border px-10 md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-primary hover:text-white transition-all duration-300 text-gray-600 cursor-pointer rounded-l-xl'>
           <b>EFFICIENCY:</b>
           <p>
             Streamlined Appointment Scheduling
@@ -69,7 +71,7 @@ const About = () => {
         </div>
 
         { /* ------------ PERSONALIZATION -------------- */}
-        <div className='border px-10 md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-primary hover:text-white transition-all duration-300 text-gray-600 cursor-pointer'>
+        <div className='border px-10 md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-primary hover:text-white transition-all duration-300 text-gray-600 cursor-pointer rounded-r-xl'>
           <b>PERSONALIZATION:</b>
           <p>
             Tailored Recommendations And Reminders
