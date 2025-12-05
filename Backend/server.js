@@ -3,6 +3,7 @@ import cors from 'cors';
 import 'dotenv/config';
 import { connectDB } from './Config/mongoDB.js';
 import uploadOnCloudinary from './Config/cloudinary.js';
+import adminRouter from './Routes/doctorsRoute.js';
 
 // APP CONFIG
 const app = express();
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
     res.send("API WORKING...");
 })
 
+app.use('/api/admin', adminRouter)
 app.listen( port, () => {
     console.log(`SERVER STARTED ON http://localhost:${port}`);
     
