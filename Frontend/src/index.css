@@ -71,7 +71,7 @@ h1,h2,h3,h4 {
    SCROLLBAR MINIMAL
 --------------------------------*/
 ::-webkit-scrollbar {
-  width: 6px;
+  @apply hidden
 }
 
 /* -------------------------------
@@ -225,4 +225,10 @@ button:active {
 @keyframes shine {
   0%   { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
+}
+
+@media (max-width: 740px) {
+  .active{
+    @apply text-white bg-primary
+  }
 }

@@ -22,7 +22,7 @@ const Navbar = () => {
             />
 
             {/* LINKS */}
-            <ul className='hidden md:flex items-center gap-7 font-medium text-textSecondary'>
+            <ul className='hidden md:flex items-center gap-7 font-medium text-text text-xl'>
 
                 {/* HOME */}
                 <NavLink to='/' className='group'>
@@ -131,7 +131,7 @@ const Navbar = () => {
                         />
                     </div>
 
-                    <ul className='flex flex-col items-center gap-4 mt-8 px-5 text-lg font-medium text-textPrimary'>
+                    <ul className='flex flex-col items-center gap-4 mt-5 px-5 text-lg font-medium'>
                         <NavLink onClick={() => setShowMenu(false)} to='/'><p className='px-5 py-2 rounded-full hover:bg-surfaceLight hover:text-primary transition'>Home</p></NavLink>
                         <NavLink onClick={() => setShowMenu(false)} to='/doctors'><p className='px-5 py-2 rounded-full hover:bg-surfaceLight hover:text-primary transition'>All Doctors</p></NavLink>
                         <NavLink onClick={() => setShowMenu(false)} to='/about'><p className='px-5 py-2 rounded-full hover:bg-surfaceLight hover:text-primary transition'>About</p></NavLink>

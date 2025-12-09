@@ -14,6 +14,7 @@ connectDB().catch( (error) => {
     console.log("FAIL TO CONNECTO DATABASE :", error);
     process.exit(1);
 })
+
 uploadOnCloudinary();
 
 // MIDDLEWEARS

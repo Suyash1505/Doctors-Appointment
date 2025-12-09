@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 
 export const connectDB = async () => {
     try {
-        const connectionInstance = await mongoose.connect
-        (`${process.env.MONGOBD_URI}/prescripto`)
+        mongoose.connection.on( 'connected', () => 
+            console.log("DATA BASE CONNECTED")
+        )
+        await mongoose.connect(`${process.env.MONGODB_URI}/cureline`)
+        console.log("MONGO_URI => ", process.env.MONGODB_URI);
 
-        console.log(`MONGO_DB CONNECTED !! DB HOST: 
-            ${connectionInstance.connection.host}`);
-        
     } 
     catch (error) {
         console.log("MONGO_DB CONNECTION ERROR : ",error);    
