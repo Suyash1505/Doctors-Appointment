@@ -1,68 +1,234 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Outfit:wght@100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* -------------------------------
+   PRISMA-STYLE COLOR SYSTEM
+--------------------------------*/
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* Brand */
+  --clr-primary: #3DA1FF;
+  --clr-primary-hover: #1E80D6;
+  --clr-primary-soft: rgba(61,161,255,0.18);
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Dark Gradient Layers */
+  --clr-bg: #0A0F1E;
+  --clr-bg-alt: #0E1626;
+  --clr-surface: rgba(20,30,55,0.75);
+  --clr-surface-light: rgba(32,45,75,0.85);
+
+  /* Text */
+  --clr-text: #F2F7FF;
+  --clr-text-secondary: #A8B6D0;
+  --clr-text-muted: #7688A2;
+
+  /* Borders */
+  --clr-border: rgba(61,161,255,0.18);
+  --clr-border-soft: rgba(61,161,255,0.08);
+
+  /* Inputs */
+  --clr-input-bg: rgba(10,20,40,0.6);
+  --clr-input-border: rgba(61,161,255,0.2);
+
+  /* Status */
+  --clr-success: #22C55E;
+  --clr-warning: #F59E0B;
+  --clr-danger: #EF4444;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+/* -------------------------------
+   GLOBAL RESET
+--------------------------------*/
+* {
+  font-family: "Outfit", sans-serif;
+  color: var(--clr-text);
+  transition: 0.25s ease;
+  box-sizing: border-box;
 }
 
 body {
+  background:
+    radial-gradient(circle at 70% 30%, rgba(61,161,255,0.12), transparent),
+    radial-gradient(circle at 20% 90%, rgba(61,161,255,0.08), transparent),
+    linear-gradient(180deg, #040812, #0A0F1E);
+  color: var(--clr-text);
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* -------------------------------
+   TYPOGRAPHY
+--------------------------------*/
+h1,h2,h3,h4 {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
 }
 
+/* -------------------------------
+   SCROLLBAR MINIMAL
+--------------------------------*/
+::-webkit-scrollbar {
+  @apply hidden
+}
+
+/* -------------------------------
+   LINKS
+--------------------------------*/
+a { color: var(--clr-primary); }
+a:hover { color: var(--clr-primary-hover); }
+
+/* -------------------------------
+   INPUTS GLASS
+--------------------------------*/
+input, textarea, select {
+  @apply rounded-xl px-4 py-2;
+  background: var(--clr-input-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--clr-input-border);
+  color: var(--clr-text);
+}
+input::placeholder {
+  color: var(--clr-text-muted);
+}
+
+/* -------------------------------
+   BUTTONS MODERN
+--------------------------------*/
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+  @apply rounded-full px-6 py-2 font-medium;
+  background: linear-gradient(135deg, #3DA1FF, #1E80D6);
+  box-shadow: 0 10px 25px rgba(61,161,255,0.25);
 }
 button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 30px rgba(61,161,255,0.4);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+/* -------------------------------
+   GLASS CARDS / PANELS
+--------------------------------*/
+.card {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.02), transparent),
+    var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+  border-radius: 18px;
+  backdrop-filter: blur(14px);
+  padding: 1rem;
+}
+
+/* -------------------------------
+   NAV ACTIVE
+--------------------------------*/
+.active hr { display:block; }
+
+/* -------------------------------
+   HERO GLOW
+--------------------------------*/
+.hero-bg {
+  background:
+    radial-gradient(circle at 70% 30%, rgba(61,161,255,0.18), transparent),
+    linear-gradient(135deg, #0B1224, #050912);
+}
+
+.hero-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(61,161,255,0.12), transparent 70%);
+  filter: blur(30px);
+  z-index: -1;
+}
+
+/* ---------------------------
+   FLOATING BACKGROUND LIGHTS
+----------------------------*/
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(61,161,255,0.18), transparent 65%);
+  filter: blur(60px);
+  opacity: 0.6;
+  animation: floatGlow 18s infinite alternate ease-in-out;
+  z-index: -1;
+}
+
+body::after {
+  top: 65%;
+  left: 65%;
+  animation-delay: 5s;
+}
+
+body::before {
+  top: -150px;
+  left: -150px;
+}
+
+/* breathing hero glow */
+.hero-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(61,161,255,0.18), transparent 70%);
+  animation: pulseGlow 4s ease-in-out infinite;
+  z-index: -1;
+}
+
+/* ---------------------------
+   BACKGROUND ANIMATIONS
+----------------------------*/
+@keyframes floatGlow {
+  from { transform: translate(0,0) scale(1); }
+  to   { transform: translate(120px, -80px) scale(1.15); }
+}
+
+@keyframes pulseGlow {
+  0%,100% { opacity: 0.6; }
+  50%     { opacity: 1; }
+}
+
+/* ---------------------------
+   BUTTON ANIMATIONS
+----------------------------*/
+button {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.25), transparent);
+  transform: translateX(-100%);
+  animation: shine 2.5s infinite linear;
+}
+
+button:hover {
+  transform: translateY(-2px) scale(1.03);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* button shimmer */
+@keyframes shine {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@media (max-width: 740px) {
+  .active{
+    @apply text-white bg-primary
   }
 }
