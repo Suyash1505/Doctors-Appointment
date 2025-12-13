@@ -5,24 +5,26 @@ const changeAvailability = async (req, res) => {
     const { docId } = req.body;
 
     const docData = await Doctor.findById(docId);
-
     if (!docData) {
       return res.json({
         success: false,
-        message: "DOCTOR NOT FOUND!"
+        message: "Doctor not found"
       });
     }
 
-    await Doctor.findByIdAndUpdate(docId, {
-      available: !docData.available
-    });
+    const updatedDoctor = await Doctor.findByIdAndUpdate(
+      docId,
+      { availability: !docData.availability },
+      { new: true }
+    );
 
     res.json({
       success: true,
-      message: "AVAILABILITY CHANGED!"
+      message: "Availability changed",
+      availability: updatedDoctor.availability
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.json({
       success: false,
       message: error.message
@@ -30,4 +32,23 @@ const changeAvailability = async (req, res) => {
   }
 };
 
-export { changeAvailability };
+
+// API TO GET ALL DOCTORS LIST FOR FRONTEND
+const doctorsList = async (req, res) => {
+    try {
+        
+        const doctors = await Doctor.find({}).select(['-password', '-email']);
+        res.json({
+            success: true,
+            doctors
+        })
+    } 
+    catch (error) {
+        console.log(error);
+        res.json({
+            success: false,
+            message: error.message
+        });
+    }
+}
+export { changeAvailability, doctorsList };
