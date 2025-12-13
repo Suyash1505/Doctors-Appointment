@@ -50,11 +50,12 @@ const doctorSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    slots_bookes:{
+    slots_booked:{
         type: Object,
         default: {},
     }
 
-}, {timestamps: true}, {minimize: false});
+}, {timestamps: true, minimize: false});
 
-export const Doctor = mongoose.model.Doctor ||  mongoose.model('Doctor', doctorSchema);
+export const Doctor =
+  mongoose.models.Doctor || mongoose.model('Doctor', doctorSchema);

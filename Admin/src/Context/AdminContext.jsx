@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useCallback } from "react";
 import { createContext, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -11,13 +12,12 @@ const AdminContextProvider = (props) => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL
 
     
-    const getAllDoctors = async () => {
+    const getAllDoctors = useCallback(async () => {
         try {
             const { data } = await axios.post(backendUrl + "/api/admin/all-doctor", {}, {headers: {adminToken: adminToken}});
 
             if(data.success){
                 setDoctors(data.doctors);
-                console.log(data.doctors);
             }
             else{
                 toast.error(data.message);
@@ -26,7 +26,7 @@ const AdminContextProvider = (props) => {
         catch (error) {
             toast.error(error.message);
         }
-    }
+    }, [adminToken, backendUrl])
 
     // FUNCTION TO CHANGE THE AVAILABLE PROPERTY OF THE DOCTOR
     const changeAvailability = async (docId) => {

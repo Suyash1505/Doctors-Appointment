@@ -39,7 +39,7 @@ const DoctorsList = () => {
                   <input 
                     onChange={() => changeAvailability(item._id)}
                     type="checkbox" 
-                    checked={item.available}
+                    checked={item.availability}
                   />
                   <p>Available</p>
                 </div>
