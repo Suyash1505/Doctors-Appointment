@@ -104,4 +104,20 @@ const loginAdmin = async ( req, res ) => {
         })
     }
 }
-export {addDoctors, loginAdmin};
+
+// API CONTROLLER FUNCTION TO GET ALL THE DATA OF THE DOCTOR'S FOR ADMIN PANNEL
+const allDoctors = async (req, res) => {
+    try {
+        const doctors = await Doctor.find({}).select('-password');
+        res.json({success: true, doctors})
+    } 
+    catch (error) {
+        console.error(error);
+        res.json({
+            success : false,
+            message : error.message
+        })
+    }
+}
+
+export {addDoctors, loginAdmin, allDoctors};

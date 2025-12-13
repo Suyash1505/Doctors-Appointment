@@ -50,7 +50,8 @@ const AddDoctor = () => {
             // API CALL TO SAVE THE DOCTOR DETAIL IN THE BACKEND
             console.log("Admin Token in Context:", adminToken);
 
-            const { data } = await axios.post(backendUrl + '/api/admin/add-doctor', formData, { headers: { adminToken }});
+            const { data } = await axios.post(backendUrl + "/api/admin/add-doctor", formData,{headers: {adminToken: adminToken}});
+
             if(data.success){
                 toast.success(data.message);
 
@@ -247,4 +248,4 @@ const AddDoctor = () => {
     )
 }
 
-export default AddDoctor
+export default AddDoctor;

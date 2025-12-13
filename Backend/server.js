@@ -19,7 +19,11 @@ uploadOnCloudinary();
 
 // MIDDLEWEARS
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5174",
+  credentials: true
+}));
+
 
 // API ENDPOINT
 app.use('/api/admin', adminRouter)
