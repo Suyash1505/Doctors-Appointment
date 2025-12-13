@@ -5,6 +5,7 @@ import { connectDB } from './Config/mongoDB.js';
 import uploadOnCloudinary from './Config/cloudinary.js';
 import adminRouter from './Routes/adminRoute.js';
 import doctorRouter from './Routes/doctorsRoute.js';
+import userRouter from './Routes/userRoute.js';
 
 // APP CONFIG
 const app = express();
@@ -26,6 +27,7 @@ app.use(cors());
 // API ENDPOINT
 app.use('/api/admin', adminRouter)
 app.use('/api/doctor', doctorRouter)
+app.use('/api/user', userRouter)
 
 app.listen( port, () => {
     console.log(`SERVER STARTED ON http://localhost:${port}`);
