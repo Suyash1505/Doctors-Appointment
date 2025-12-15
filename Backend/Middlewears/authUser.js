@@ -6,33 +6,26 @@ const authUser = async (req, res, next) => {
     const token = req.headers.token;
 
     if (!token) {
-      return res.json({
+      return res.status(401).json({
         success: false,
-        message: "NOT AUTHORISED LOGIN AGAIN!"
+        message: "LOGIN REQUIRED"
       });
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.body.userId = decoded.id;
+
     
-    if (
-      decoded.key !==
-      process.env.ADMIN_EMAIL + process.env.ADMIN_PASSWORD
-    ) {
-      return res.json({
-        success: false,
-        message: "NOT AUTHORISED LOGIN AGAIN!"
-      });
-    }
+    req.user = { id: decoded.id };
 
     next();
   } catch (error) {
-    console.error(error);
-    return res.json({
+    return res.status(401).json({
       success: false,
-      message: "NOT AUTHORISED LOGIN AGAIN!"
+      message: "INVALID TOKEN"
     });
   }
 };
 
 export default authUser;
+
+

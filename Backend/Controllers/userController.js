@@ -106,10 +106,12 @@ const loginUser = async (req, res) => {
 const getProfile = async (req, res) => {
 
     try {
-        const { userId } = req.body;
+        
+        const userId = req.user.id;
+
         const userData = await User.findById(userId).select('-password');
 
-        req.json({
+        res.json({
             success: true,
             userData
         })
@@ -123,11 +125,14 @@ const getProfile = async (req, res) => {
     }
 }
 
+
 // API TO UPDATA USER PROFILE
 const updateProfile = async (req, res) => {
 
     try {
-        const { userId, name, phone, address, dob, gender } = req.body;
+
+        const userId = req.user.id;
+        const { name, phone, address, dob, gender } = req.body;
         const imageFile = req.file;
 
         if(!name || !phone || !dob || !gender){
@@ -137,20 +142,31 @@ const updateProfile = async (req, res) => {
             })
         }
 
-        await User.findByIdAndUpdate(userId, {name, photo, address: JSON.parse(address), dob, geneder});
+        await User.findByIdAndUpdate(userId, {
+            name,
+            phone,
+            address: address ? JSON.parse(address) : {},
+            dob,
+            gender
+        });
 
         if(imageFile){
 
             // UPLOAD IMAGE TO CLOUDINARY
-            const imageUpload = await cloudinary.uploader.upload(imageFile.path, {resource_type: 'image'})
+            const imageUpload = await cloudinary.uploader.upload(
+                imageFile.path,
+                { resource_type: 'image' }
+            );
+
             const imageUrl = imageUpload.secure_url;
 
-            await User.findByIdAndUpdate(userId, {image: imageUrl});
-            res.json({
-                success: true,
-                message: "PROFILE UPDATED"
-            }) 
+            await User.findByIdAndUpdate(userId, { image: imageUrl });
         }
+
+        res.json({
+            success: true,
+            message: "PROFILE UPDATED"
+        }) 
     } 
     catch (error) {
         console.log(error);
@@ -160,4 +176,5 @@ const updateProfile = async (req, res) => {
         }) 
     }
 }
+
 export { registerUser, loginUser, getProfile, updateProfile };
