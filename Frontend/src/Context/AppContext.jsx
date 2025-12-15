@@ -10,12 +10,9 @@ const AppContextProvider =  (props) => {
     
     const currencySymbole = '$';
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
-    const [doctors, setDoctors] = useState([]);
 
-    const value = {
-        doctors,
-        currencySymbole,    
-    }
+    const [doctors, setDoctors] = useState([]);
+    const [token, setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : false);
 
     const getDoctorsData = async () => {
         try {
@@ -31,6 +28,14 @@ const AppContextProvider =  (props) => {
             console.log(error);
             toast.error(error.message);
         }
+    }
+
+    const value = {
+        doctors,
+        currencySymbole, 
+        token,
+        setToken,
+        backendUrl   
     }
 
     useEffect( () => {
