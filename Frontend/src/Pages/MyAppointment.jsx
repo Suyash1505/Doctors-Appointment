@@ -1,9 +1,43 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { AppContext } from '../Context/AppContext'
+import { useState } from 'react'
+import axios from 'axios'
+import { toast } from 'react-toastify'
+import { useEffect } from 'react'
 
 const MyAppointment = () => {
   
-  const { doctors } = useContext(AppContext)
+  const { backendUrl, token } = useContext(AppContext)
+
+  const [appointments, setAppointments] = useState([]);
+  const months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  
+  const slotDateFormat = (slotDate) => {
+    const dateArray = slotDate.split('_');
+    return dateArray[0] + " " + months[Number(dateArray[1])] + " " + dateArray[2];
+  }
+
+  const getUserAppointments =  async () => {
+
+    try {
+      const { data } = await axios.get(backendUrl + '/api/user/appointments', {headers: {token}})
+      if(data.success){
+        setAppointments(data.appointments.reverse());
+        console.log(data.appointments);
+      }
+    } 
+    catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  }
+
+  useEffect( () => {
+
+    if(token){
+      getUserAppointments();
+    }
+  }, [token])
 
   return (
     <div>
@@ -12,36 +46,36 @@ const MyAppointment = () => {
       </p>
 
       <div>
-        {doctors.slice(0,3).map( (item, index) => (
+        {appointments.map( (item, index) => (
           <div className='grid grid-cols-[1fr_2fr] gap-4 sm:flex sm:gap-6 py-2 border-b' key={index}>
             <div>
               <img 
                 className='bg-primary w-32 rounded-lg'
-                src={item.image}
+                src={item.docData.image}
                 alt="doctors_image" 
               />
             </div>
 
             <div className='flex-1 text-sm'>
               <p className='text-text font-semibold'>
-                {item.name}
+                {item.docData.name}
               </p>
 
               <p className='text-gray-600'>
-                {item.speciality}
+                {item.docData.speciality}
               </p>
               <p className='text-text font-medium mt-1'>
                 Address:
               </p>
 
               <p className='text-xs text-gray-600'>
-                {item.address.line1}
+                {item.docData.address.line1}
               </p>
 
               <p className='text-xs text-gray-600'>
-                {item.address.line2}
+                {item.docData.address.line2}
               </p>
-              <p className='text-sm mt-1 text-gray-600 gap-2'><span className='text-sm font-medium text-text gap-2'>Date & Time: </span> 16, Aug, 2025 | 8:30 PM</p>
+              <p className='text-sm mt-1 text-gray-600 gap-2'><span className='text-sm font-medium text-text gap-2'>Date & Time: </span> {slotDateFormat(item.slotDate)} | {item.slotTime} </p>
             </div>
 
             <div>

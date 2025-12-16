@@ -110,7 +110,7 @@ const getProfile = async (req, res) => {
 
     try {
         
-        const userId = req.user.id;
+        const userId = req.userId;
 
         const userData = await User.findById(userId).select('-password');
 
@@ -133,7 +133,7 @@ const updateProfile = async (req, res) => {
 
     try {
 
-        const userId = req.user.id;
+        const userId = req.userId;
         const { name, phone, address, dob, gender } = req.body;
         const imageFile = req.file;
 
@@ -247,7 +247,6 @@ const bookAppointment = async (req, res) => {
     catch(error){
 
         console.log(error);
-
         res.json({
             success: false,
             message: error.message
@@ -255,11 +254,40 @@ const bookAppointment = async (req, res) => {
     }
 }
 
+// API TO GET THE USER APPOINTMENT
+const listAppointment = async (req, res) => {
+  try {
+    const userId = req.userId;
+
+    const appointments = await Appointment
+      .find({ userId })
+      .populate("docId"); 
+
+    
+    const formattedAppointments = appointments.map(app => ({
+      ...app._doc,
+      docData: app.docId,
+      docId: app.docId._id
+    }));
+
+    res.json({
+      success: true,
+      appointments: formattedAppointments
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      message: error.message
+    });
+  }
+};
 
 
 export { registerUser, 
     loginUser, 
     getProfile, 
     updateProfile, 
-    bookAppointment 
+    bookAppointment,
+    listAppointment 
 };
