@@ -183,26 +183,39 @@ const updateProfile = async (req, res) => {
 const bookAppointment = async (req, res) => {
 
     try {
-        const { userId, docId, slotDate, slotTime } = req.body;
-        const docData = await Doctor.findById(docId).select('-password');
 
-        if(!docData.availability){
+        const { docId, slotDate, slotTime } = req.body;
+        const userId = req.userId;
+
+        // CHECK USER AUTHENTICATION
+        if(!userId){
             return res.json({
                 success: false,
-                message: 'DOCTOR NOT AVAILABLE'
+                message: "USER NOT AUTHENTICATED"
             })
         }
 
-        let slots_booked = docData.slots_booked;
+        // FETCH DOCTOR DATA
+        const docData = await Doctor.findById(docId);
 
-        // CHECK FOR THE SLOTS AVAILABLE
+        if(!docData || !docData.availability){
+            return res.json({
+                success: false,
+                message: "DOCTOR NOT AVAILABLE"
+            })
+        }
+
+        let slots_booked = docData.slots_booked || {};
+
+        // CHECK SLOT AVAILABILITY
         if(slots_booked[slotDate]){
             if(slots_booked[slotDate].includes(slotTime)){
                 return res.json({
-                success: false,
-                message: 'SLOT NOT AVAILABLE'
-            })
-            }{
+                    success: false,
+                    message: "SLOT NOT AVAILABLE"
+                })
+            }
+            else{
                 slots_booked[slotDate].push(slotTime);
             }
         }
@@ -211,38 +224,38 @@ const bookAppointment = async (req, res) => {
             slots_booked[slotDate].push(slotTime);
         }
 
-        const userData = await User.findById(userId).select('-password');
-        delete docData.slots_booked;
-
-        const appointmentData = {
+        // CREATE APPOINTMENT
+        await Appointment.create({
             userId,
             docId,
-            userData,
-            docData,
-            amount: docData.fees,
-            slotTime,
             slotDate,
-            date: Date.now()
-        }
+            slotTime,
+            amount: docData.fees
+        })
 
-        const newAppointment = new Appointment(appointmentData);
-        await newAppointment.save()
+        // UPDATE DOCTOR SLOTS
+        await Doctor.findByIdAndUpdate(
+            docId,
+            { slots_booked }
+        )
 
-        // SAVE NEW SLOT DATA IN DOCTORS DATA
-        await Doctor.findByIdAndUpdate(docId, {slots_booked})
         res.json({
             success: true,
-            message: 'APPOINTMENT BOOKED SUCCESSFULLY'
+            message: "APPOINTMENT BOOKED SUCCESSFULLY"
         })
-    } 
-    catch (error) {
+    }
+    catch(error){
+
         console.log(error);
+
         res.json({
             success: false,
             message: error.message
-        }) 
+        })
     }
 }
+
+
 
 export { registerUser, 
     loginUser, 
