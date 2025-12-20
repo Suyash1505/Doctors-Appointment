@@ -283,11 +283,69 @@ const listAppointment = async (req, res) => {
   }
 };
 
+// APIT TO CANCLE APPOINTMENT
+const cancelAppointment = async (req, res) => {
+  try {
+    const { appointmentId } = req.body;
+    const userId = req.userId;
+
+    const appointmentData = await Appointment.findById(appointmentId);
+
+    if (!appointmentData) {
+      return res.json({
+        success: false,
+        message: "APPOINTMENT NOT FOUND"
+      });
+    }
+
+    // VERIFY USER (ObjectId vs string)
+    if (appointmentData.userId.toString() !== userId) {
+      return res.json({
+        success: false,
+        message: "UNAUTHORIZED ACTION"
+      });
+    }
+
+    // CANCEL APPOINTMENT
+    await Appointment.findByIdAndUpdate(
+      appointmentId,
+      { cancelled: true }
+    );
+
+    // MAKE SLOT AVAILABLE AGAIN
+    const { docId, slotDate, slotTime } = appointmentData;
+
+    const doctorData = await Doctor.findById(docId);
+
+    if (doctorData?.slots_booked?.[slotDate]) {
+      doctorData.slots_booked[slotDate] =
+        doctorData.slots_booked[slotDate].filter(
+          time => time !== slotTime
+        );
+
+      await Doctor.findByIdAndUpdate(docId, {
+        slots_booked: doctorData.slots_booked
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "APPOINTMENT CANCELLED"
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      message: error.message
+    });
+  }
+};
 
 export { registerUser, 
     loginUser, 
     getProfile, 
     updateProfile, 
     bookAppointment,
-    listAppointment 
+    listAppointment,
+    cancelAppointment 
 };
