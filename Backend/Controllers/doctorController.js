@@ -1,5 +1,8 @@
 import { Doctor } from "../Models/doctorsModels.js";
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
+// API TO CHECK THE AVAILABILITY OF DOCTOR
 const changeAvailability = async (req, res) => {
   try {
     const { docId } = req.body;
@@ -32,23 +35,65 @@ const changeAvailability = async (req, res) => {
   }
 };
 
-
 // API TO GET ALL DOCTORS LIST FOR FRONTEND
 const doctorsList = async (req, res) => {
-    try {
-        
-        const doctors = await Doctor.find({}).select(['-password', '-email']);
-        res.json({
-            success: true,
-            doctors
-        })
-    } 
-    catch (error) {
-        console.log(error);
-        res.json({
-            success: false,
-            message: error.message
-        });
-    }
+  try {
+      
+      const doctors = await Doctor.find({}).select(['-password', '-email']);
+      res.json({
+          success: true,
+          doctors
+      })
+  } 
+  catch (error) {
+
+    console.log(error);
+    res.json({
+      success: false,
+      message: error.message
+    });
+  }
 }
-export { changeAvailability, doctorsList };
+
+// API FOR DOCTOR LOGIN
+const doctorLogin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const doctor = await Doctor.findOne({email});
+
+    if(!doctor){
+      return res.json({
+        success: false,
+        message: 'DOCTOR DOES NOT EXIST'
+      })
+    }
+
+    const isMatch = await bcrypt.compare(password, doctor.password)
+    if(isMatch){
+      const token = jwt.sign({id: doctor._id}, process.env.JWT_SECRET)
+      res.json({
+          success: true,
+          token
+      })
+    }
+    else{
+      res.json({
+          success: false,
+          message: "INVALID CREDENTIALS"
+      })
+    }
+  } 
+  catch (error) {
+
+    console.log(error);
+    res.json({
+      success: false,
+      message: error.message
+    });
+  }
+}
+export { 
+  changeAvailability, 
+  doctorsList,
+  doctorLogin
+};

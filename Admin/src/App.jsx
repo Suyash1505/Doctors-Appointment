@@ -10,12 +10,14 @@ import Dashboard from './Pages/Admin/Dashboard';
 import AllAppointments from './Pages/Admin/AllAppointments';
 import AddDoctor from './Pages/Admin/AddDoctor';
 import DoctorsList from './Pages/Admin/DoctorsList';
+import { DoctorContext } from './Context/DoctorContext';
 
 const App = () => {
 
   const { adminToken } = useContext(AdminContext);
+  const { doctorToken } = useContext(DoctorContext);
 
-  return  adminToken ? (
+  return  adminToken || doctorToken ? (
     <div className='mx4-4 max-w-100%'> 
       <ToastContainer/>
       <Navbar/>
