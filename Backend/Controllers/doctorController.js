@@ -1,6 +1,7 @@
 import { Doctor } from "../Models/doctorsModels.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { Appointment } from "../Models/appointmentModels.js";
 
 // API TO CHECK THE AVAILABILITY OF DOCTOR
 const changeAvailability = async (req, res) => {
@@ -53,7 +54,7 @@ const doctorsList = async (req, res) => {
       message: error.message
     });
   }
-}
+};
 
 // API FOR DOCTOR LOGIN
 const doctorLogin = async (req, res) => {
@@ -91,9 +92,98 @@ const doctorLogin = async (req, res) => {
       message: error.message
     });
   }
-}
+};
+
+// API TO GET DOCTOR'S APPOINTMENTS FOR DOCTOR PANEL
+const doctorsAppointment = async (req, res) => {
+  try {
+    const docId = req.docId;
+
+    const appointments = await Appointment
+      .find({ docId })
+      .populate("userId", "name email phone dob gender image");
+
+    res.json({
+      success: true,
+      appointments
+    });
+  } 
+  catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+// API TO MARK APPOINTMENT COMPLETED FOR DOCTORS PANNEL
+const appointmentComplete = async (req, res) => {
+  try {
+    const { appointmentId } = req.body;
+    const docId = req.docId;
+
+    const appointmentData = await Appointment.findById(appointmentId);
+
+    if(appointmentData && appointmentData.docId.toString() === docId){
+      await Appointment.findByIdAndUpdate(appointmentId, {isCompleted: true})
+      return res.json({
+        success: true,
+        message: 'APPOINTMENT COMPLETED'
+      })
+    }
+    else{
+      return res.json({
+        success: false,
+        message: 'APPOINTMENT COMPLETION FAILED'
+      })
+    }
+  } 
+  catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+// API TO CANCLE APPOINTMENT  FOR DOCTORS PANNEL
+const appointmentCancel = async (req, res) => {
+  try {
+    const { appointmentId } = req.body;
+    const docId = req.docId;
+
+    const appointmentData = await Appointment.findById(appointmentId);
+    
+    if(appointmentData && appointmentData.docId.toString() === docId){
+      await Appointment.findByIdAndUpdate(appointmentId, {cancelled: true})
+      return res.json({
+        success: true,
+        message: 'APPOINTMENT CANCELED'
+      })
+    }
+    else{
+      return res.json({
+        success: false,
+        message: 'APPOINTMENT CANCELLATION FAILED'
+      })
+    }
+  } 
+  catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
 export { 
   changeAvailability, 
   doctorsList,
-  doctorLogin
+  doctorLogin,
+  doctorsAppointment,
+  appointmentComplete,
+  appointmentCancel
 };

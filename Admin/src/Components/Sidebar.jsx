@@ -85,7 +85,7 @@ const Sidebar = () => {
                             src={assets.home_icon} 
                             alt="home-icon" 
                         />
-                        <p>
+                        <p className='hidden md:block'>
                             Dashboard
                         </p>
                     </NavLink>
@@ -99,7 +99,7 @@ const Sidebar = () => {
                             src={assets.appointment_icon} 
                             alt="appointment-icon" 
                         />
-                        <p>
+                        <p className='hidden md:block'>
                             Appointments
                         </p>
                     </NavLink>
@@ -113,7 +113,7 @@ const Sidebar = () => {
                             src={assets.people_icon} 
                             alt="list-icon" 
                         />
-                        <p>
+                        <p className='hidden md:block'>
                            Profile
                         </p>
                     </NavLink>

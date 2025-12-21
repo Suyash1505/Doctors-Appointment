@@ -65,7 +65,7 @@ const registerUser = async (req, res) => {
             message: error.message
         })
     }
-}
+};
 
 // API FOR THE USER LOGIN
 const loginUser = async (req, res) => {
@@ -103,7 +103,7 @@ const loginUser = async (req, res) => {
             message: error.message
         })    
     }
-}
+};
 
 // API TO GET THE USER PROFILE DATA
 const getProfile = async (req, res) => {
@@ -126,7 +126,7 @@ const getProfile = async (req, res) => {
             message: error.message
         }) 
     }
-}
+};
 
 // API TO UPDATA USER PROFILE
 const updateProfile = async (req, res) => {
@@ -177,7 +177,7 @@ const updateProfile = async (req, res) => {
             message: error.message
         }) 
     }
-}
+};
 
 // API TO BOOK AN APPOINTMENT
 const bookAppointment = async (req, res) => {
@@ -252,7 +252,7 @@ const bookAppointment = async (req, res) => {
             message: error.message
         })
     }
-}
+};
 
 // API TO GET THE USER APPOINTMENT
 const listAppointment = async (req, res) => {
@@ -274,7 +274,8 @@ const listAppointment = async (req, res) => {
       success: true,
       appointments: formattedAppointments
     });
-  } catch (error) {
+  } 
+  catch (error) {
     console.log(error);
     res.json({
       success: false,
@@ -381,7 +382,7 @@ const paymentRazorpay = async (req, res) => {
             message: error.message
         });
     }
-}
+};
 
 // API TO VERIFY RAZORPAY
 const vefifyRazorpay = async (req, res) => {
@@ -411,7 +412,8 @@ const vefifyRazorpay = async (req, res) => {
             message: error.message
         });
     }
-}
+};
+
 export { registerUser, 
     loginUser, 
     getProfile, 
