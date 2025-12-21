@@ -283,7 +283,7 @@ const listAppointment = async (req, res) => {
   }
 };
 
-// APIT TO CANCLE APPOINTMENT
+// API TO CANCLE APPOINTMENT
 const cancelAppointment = async (req, res) => {
   try {
     const { appointmentId } = req.body;
@@ -354,7 +354,7 @@ const paymentRazorpay = async (req, res) => {
         const appointmentData = await Appointment.findById(appointmentId);
 
         if(!appointmentData || appointmentData.cancelled){
-            res.json({
+            return res.json({
                 success: false,
                 message: "APPOINTMENT CANCELLED OR NOT FOUND"
             });
@@ -363,7 +363,7 @@ const paymentRazorpay = async (req, res) => {
         // CREATING OPTIONS FOR RAZORPAY PAYMENT
         const options = {
             amount : appointmentData.amount * 100,
-            currency : process.env.CRRENCY,
+            currency : process.env.CURRENCY,
             receipt : appointmentId
         }
 
