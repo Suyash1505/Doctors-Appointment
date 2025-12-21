@@ -84,7 +84,7 @@ const MyAppointment = () => {
 
   const appointmentRazorpay = async (appointmentId) => {
     try {
-      const { data } = await axios.post(backendUrl+'/api/user/payment-razorpay', {appointmentId}, {headers: token});
+      const { data } = await axios.post(backendUrl+'/api/user/payment-razorpay', {appointmentId}, {headers: {token}});
       if(data.success){
         console.log(data.order);
         initPay(data.order)
@@ -157,7 +157,7 @@ const MyAppointment = () => {
               {
                 !item.cancelled && !item.payment && 
                 <button
-                  onClick={appointmentRazorpay(item._id)}
+                  onClick={() => appointmentRazorpay(item._id)}
                   className='text-sm text-stone-700 text-center sm:min-w-48 py-2 border rounded hover:bg-primary hover:text-white transition-all duration-300'>
                   Pay Online
                 </button>
