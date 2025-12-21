@@ -11,6 +11,9 @@ import AllAppointments from './Pages/Admin/AllAppointments';
 import AddDoctor from './Pages/Admin/AddDoctor';
 import DoctorsList from './Pages/Admin/DoctorsList';
 import { DoctorContext } from './Context/DoctorContext';
+import DoctorDashboard from './Pages/Doctor/DoctorDashboard';
+import DoctorProfile from './Pages/Doctor/DoctorProfile';
+import DoctorAppointments from './Pages/Doctor/DoctorAppointments';
 
 const App = () => {
 
@@ -25,11 +28,17 @@ const App = () => {
       <div className='flex items-start'>
         <Sidebar/>
         <Routes>
+          {/*  -------- ADMIN ROUTES ---------- */}
           <Route path='/' element={<></>} />
           <Route path='/admin-dashboard' element={<Dashboard/>} />
           <Route path='/all-appointments' element={<AllAppointments/>} />
           <Route path='/add-doctor' element={<AddDoctor/>} />
           <Route path='/doctors-list' element={<DoctorsList/>} />
+
+          {/*  -------- DOCTOR ROUTES ---------- */}
+          <Route path='/doctor-dashboard' element={<DoctorDashboard/>} />
+          <Route path='/doctor-profile' element={<DoctorProfile/>} />
+          <Route path='/doctor-appointments' element={<DoctorAppointments/>} />
         </Routes>
       </div>
     </div>

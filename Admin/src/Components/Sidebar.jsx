@@ -2,13 +2,17 @@ import React, { useContext } from 'react'
 import { AdminContext } from '../Context/AdminContext'
 import { NavLink } from 'react-router-dom';
 import { assets } from '../assets/assets';
+import { DoctorContext } from '../Context/DoctorContext';
 
 const Sidebar = () => {
 
     const { adminToken } = useContext(AdminContext);
+    const { doctorToken } = useContext(DoctorContext);
 
     return (
         <div className='min-h-screen bg-surface'>
+
+            {/* --------- ADMIN SIDEBAR ---------- */}
             {
                 adminToken && <ul className='text-text mt-5'>
                     <NavLink 
@@ -64,6 +68,53 @@ const Sidebar = () => {
                         />
                         <p>
                             Doctors List
+                        </p>
+                    </NavLink>
+                </ul>
+            }
+
+            {/* --------- DOCTOR SIDEBAR ---------- */}
+            {
+                doctorToken && <ul className='text-text mt-5'>
+                    <NavLink 
+                        to={'/doctor-dashboard'}
+                        className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer transition-all duration-150 
+                            ${isActive ? 'bg-surfaceLight border-r-4 border-borderSoft': ''}`}
+                    >
+                        <img 
+                            src={assets.home_icon} 
+                            alt="home-icon" 
+                        />
+                        <p>
+                            Dashboard
+                        </p>
+                    </NavLink>
+
+                    <NavLink 
+                        to={'/doctor-appointments'}
+                        className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer transition-all duration-150 
+                            ${isActive ? 'bg-surfaceLight border-r-4 border-borderSoft': ''}`}
+                    >
+                        <img 
+                            src={assets.appointment_icon} 
+                            alt="appointment-icon" 
+                        />
+                        <p>
+                            Appointments
+                        </p>
+                    </NavLink>
+
+                    <NavLink 
+                        to={'/doctor-profile'}
+                        className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer transition-all duration-150 
+                            ${isActive ? 'bg-surfaceLight border-r-4 border-borderSoft': ''}`}
+                    >
+                        <img 
+                            src={assets.people_icon} 
+                            alt="list-icon" 
+                        />
+                        <p>
+                           Profile
                         </p>
                     </NavLink>
                 </ul>
