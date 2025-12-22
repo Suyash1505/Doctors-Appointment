@@ -179,11 +179,59 @@ const appointmentCancel = async (req, res) => {
   }
 };
 
+// API TO GET DASHBOARD DATA FOR DOCTORS PANNEL
+const doctorDashboard = async (req, res) => {
+  try {
+    const docId = req.docId;
+    const appointments = await Appointment.find({ docId });
+
+    let earnings = 0;
+    appointments.map( (item) => {
+      if(item.isCompleted || item.payment){
+        earnings += item.amount;
+      }
+    })
+
+    // UNIQUE PATIENT COUNT
+    const patientsSet = new Set();
+    appointments.forEach(item => {
+      patientsSet.add(item.userId.toString());
+    });
+
+    const latestAppointments = await Appointment
+    .find({ docId })
+    .sort({ createdAt: -1 })
+    .limit(5)
+    .populate("userId", "name image")
+    .populate("docId", "name image");
+
+    const dashboardData = {
+      earnings,
+      appointments: appointments.length,
+      patients: patientsSet.size,
+      latestAppointments
+    };
+
+    res.json({
+        success: true,
+        dashboardData
+    });
+  } 
+  catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      message: error.message
+    });
+  }
+}
+
 export { 
   changeAvailability, 
   doctorsList,
   doctorLogin,
   doctorsAppointment,
   appointmentComplete,
-  appointmentCancel
+  appointmentCancel,
+  doctorDashboard
 };

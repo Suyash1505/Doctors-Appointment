@@ -10,6 +10,7 @@ const DoctorContextProvider = (props) => {
     
     const [doctorToken, setDoctorToken] = useState(localStorage.getItem('doctorToken')? localStorage.getItem('doctorToken') :'')
     const [appointments, setAppointments] = useState([]);
+    const [dashboardData, setDashboardData] = useState(false);
 
     // FUNCTION TO GET ALL THE APPOINTMENT ON ADMIN DASHBOARD
     const getAllAppointment = async () => {
@@ -65,6 +66,24 @@ const DoctorContextProvider = (props) => {
         }
     }
 
+    // FUNCTION TO GET THE DASHBOARD DATA OF DOCTOR PANNEL
+    const getDashboardData = async () => {
+        try {
+            const { data } = await axios.get(backendUrl+'/api/doctor/dashboard', {headers: {doctorToken: doctorToken}});
+            if(data.success){
+                setDashboardData(data.dashboardData);
+                console.log(data.dashboardData);
+                toast.success(data.message);
+            }
+            else{
+                toast.error(data.message);
+            }
+        } 
+        catch (error) {
+            toast.error(error.message);
+        }
+    }
+
     const value = {
         doctorToken,
         setDoctorToken,
@@ -73,7 +92,10 @@ const DoctorContextProvider = (props) => {
         setAppointments,
         getAllAppointment,
         completeAppointment,
-        cancelAppointment
+        cancelAppointment,
+        dashboardData,
+        setDashboardData,
+        getDashboardData
     }
 
     return (
