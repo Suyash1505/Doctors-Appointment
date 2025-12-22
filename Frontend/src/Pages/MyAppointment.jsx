@@ -20,7 +20,6 @@ const MyAppointment = () => {
   }
 
   const getUserAppointments =  async () => {
-
     try {
       const { data } = await axios.get(backendUrl + '/api/user/appointments', {headers: {token}})
       if(data.success){
@@ -148,14 +147,14 @@ const MyAppointment = () => {
 
             <div className='flex flex-col justify-end gap-2'>
               {
-                !item.cancelled && item.payment && 
+                !item.cancelled && item.payment && !item.isCompleted &&
                 <button
                   className='text-sm text-stone-700 text-center sm:min-w-48 py-2 border rounded hover:bg-primary hover:text-white transition-all duration-300'>
                   Paid
                 </button>
               }
               {
-                !item.cancelled && !item.payment && 
+                !item.cancelled && !item.payment && !item.isCompleted &&
                 <button
                   onClick={() => appointmentRazorpay(item._id)}
                   className='text-sm text-stone-700 text-center sm:min-w-48 py-2 border rounded hover:bg-primary hover:text-white transition-all duration-300'>
@@ -163,7 +162,7 @@ const MyAppointment = () => {
                 </button>
               }
               {
-                !item.cancelled && 
+                !item.cancelled && !item.isCompleted &&
                 <button 
                   onClick={() => cancleAppointment(item._id)}
                   className='text-sm text-stone-700 text-center sm:min-w-48 py-2 border rounded  hover:bg-danger hover:text-white transition-all duration-300'>
@@ -171,10 +170,16 @@ const MyAppointment = () => {
                 </button>
               }
               {
-                item.cancelled &&
+                item.cancelled && !item.isCompleted &&
                 <button className='text-sm text-stone-700 text-center sm:min-w-48 py-2 border rounded hover:bg-primary hover:text-white transition-all duration-300'>
                   Appointment Cancelled
                 </button>
+              }
+              {
+                item.isCompleted &&
+                <p className='text-sm text-green-500'>
+                  Completed
+                </p>
               }
             </div>
           </div>

@@ -2,6 +2,7 @@ import { Doctor } from "../Models/doctorsModels.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Appointment } from "../Models/appointmentModels.js";
+import { v2 as cloudinary } from "cloudinary";
 
 // API TO CHECK THE AVAILABILITY OF DOCTOR
 const changeAvailability = async (req, res) => {
@@ -226,6 +227,72 @@ const doctorDashboard = async (req, res) => {
   }
 }
 
+// API TO GET THE DOCTOR PROFILE DATA
+const getDoctorProfile = async (req, res) => {
+  try {  
+    const docId = req.docId;
+    const docData = await Doctor.findById(docId).select('-password');
+
+    res.json({
+      success: true,
+      docData
+    })
+  } 
+  catch (error) {
+    console.log(error);
+    res.json({
+        success: false,
+        message: error.message
+    }) 
+  }
+};
+
+// API TO UPDATA DOCTOR'S PROFILE
+const updateDoctorProfile = async (req, res) => {
+
+  try {
+    const docId = req.docId;
+    const { fees, address, availability } = req.body;
+    const imageFile = req.file;
+
+      if(!fees || !address || !availability === undefined){
+          return res.json({
+              success : false,
+              message : "DATA MISSINGE"
+          })
+      }
+
+      await Doctor.findByIdAndUpdate(docId, {
+        fees,
+        address: address ? JSON.parse(address) : {},
+        availability
+      });
+
+      if(imageFile){
+        // UPLOAD IMAGE TO CLOUDINARY
+        const imageUpload = await cloudinary.uploader.upload(
+          imageFile.path,
+          { resource_type: 'image' }
+        );
+
+        const imageUrl = imageUpload.secure_url;
+        await Doctor.findByIdAndUpdate(docId, { image: imageUrl });
+      }
+
+      res.json({
+          success: true,
+          message: "PROFILE UPDATED"
+      }) 
+  } 
+  catch (error) {
+      console.log(error);
+      res.json({
+          success: false,
+          message: error.message
+      }) 
+  }
+};
+
 export { 
   changeAvailability, 
   doctorsList,
@@ -233,5 +300,7 @@ export {
   doctorsAppointment,
   appointmentComplete,
   appointmentCancel,
-  doctorDashboard
+  doctorDashboard,
+  getDoctorProfile,
+  updateDoctorProfile
 };

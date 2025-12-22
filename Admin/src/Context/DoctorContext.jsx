@@ -11,6 +11,7 @@ const DoctorContextProvider = (props) => {
     const [doctorToken, setDoctorToken] = useState(localStorage.getItem('doctorToken')? localStorage.getItem('doctorToken') :'')
     const [appointments, setAppointments] = useState([]);
     const [dashboardData, setDashboardData] = useState(false);
+    const [docData, setDocData] = useState(false);
 
     // FUNCTION TO GET ALL THE APPOINTMENT ON ADMIN DASHBOARD
     const getAllAppointment = async () => {
@@ -84,6 +85,34 @@ const DoctorContextProvider = (props) => {
         }
     }
 
+    // FUNCTION TO GET THE DOCTOR'S PROFILE DATA
+    const getProfileData = async () => {
+        try {
+            const { data } = await axios.get(backendUrl + "/api/doctor/get-profile", { headers: { doctorToken: doctorToken }});
+
+            if(data.success) {
+                setDocData({
+                    ...data.docData,
+                    address: data.docData.address || {
+                    line1: "",
+                    line2: ""
+                    },
+                    fees: data.docData.fees || "",
+                    image: data.docData.image || "",
+                    availability: data.docData.availability ?? false,
+                });
+                console.log(data.docData);
+            } 
+            else {
+                toast.error(data.message);
+            }
+        } 
+        catch (error) {
+            console.error(error);
+            toast.error(error.message);
+        }
+    };
+
     const value = {
         doctorToken,
         setDoctorToken,
@@ -95,7 +124,10 @@ const DoctorContextProvider = (props) => {
         cancelAppointment,
         dashboardData,
         setDashboardData,
-        getDashboardData
+        getDashboardData,
+        docData,
+        setDocData,
+        getProfileData
     }
 
     return (

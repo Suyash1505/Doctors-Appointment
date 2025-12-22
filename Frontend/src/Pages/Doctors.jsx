@@ -116,9 +116,9 @@ const Doctors = () => {
                 />
 
                 <div className='p-4'>
-                  <div className='flex items-center gap-2 text-sm text-green-500'>
-                    <p className='w-2 h-2 rounded-full bg-green-500'></p>
-                    <p>Available</p>
+                  <div className="flex items-center gap-2 text-sm mb-2 text-center">
+                    <span className={`w-2 h-2 ${item.available ? ' bg-success': 'bg-danger'}rounded-full`}></span>
+                    <span className={`${item.available ? "text-success" : 'text-red-500'}`}>{item.available ? 'Available' : 'Not Available'}</span>
                   </div>
                   <p className='text-text text-lg font-medium'>{item.name}</p>
                   <p className='text-text-muted text-sm'>{item.speciality}</p>

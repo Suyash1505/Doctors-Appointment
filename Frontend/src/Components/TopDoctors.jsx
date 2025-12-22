@@ -40,8 +40,8 @@ const TopDoctors = () => {
             {/* Info */}
             <div className="p-4">
               <div className="flex items-center gap-2 text-sm mb-2 text-center">
-                <span className="w-2 h-2 rounded-full bg-success"></span>
-                <span className="text-success">Available</span>
+                <span className={`w-2 h-2 ${item.available ? ' bg-success': 'bg-danger'}rounded-full`}></span>
+                <span className={`${item.available ? "text-success" : 'text-red-500'}`}>{item.available ? 'Available' : 'Not Available'}</span>
               </div>
 
               <p className="text-text text-lg font-medium">{item.name}</p>
