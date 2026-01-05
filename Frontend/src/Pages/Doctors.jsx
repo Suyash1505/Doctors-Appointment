@@ -6,6 +6,7 @@ const Doctors = () => {
 
   const { speciality } = useParams();
   const { doctors } = useContext(AppContext);
+  
   const [filterDoc, setFilterDoc] = useState([]);
   const [filter, setFilter] = useState(false);
 
